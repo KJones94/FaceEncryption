@@ -26,6 +26,13 @@ def EncryptVideo(video):
 
 def EncryptFrame(frame):
     print("Encrypt frame")
+    #change pixel colors
+    for i in range(100,200):
+        for j in range(20, 50):
+            frame[i][j] = [255,0,0]
+    print(frame[100][200])
+def paintFrame(frame):
+    print("Encrypt frame")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
@@ -47,8 +54,9 @@ def watchVideo(video_file):
     cv2.destroyAllWindows()
 
 EncryptVideo("Videos/Video1.mp4")
-# watchVideo("Videos/Video1.mp4")
-# watchVideo("Encrypted_Video.mp4")
+#watchVideo("Videos/Video1.mp4")
+watchVideo("Encrypted_Video.mp4")
+
 """
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
