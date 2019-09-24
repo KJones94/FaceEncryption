@@ -26,11 +26,21 @@ def EncryptVideo(video):
 
 def EncryptFrame(frame):
     print("Encrypt frame")
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    for (x,y,w,h) in faces:
+        # diff = 0
+        # for col in range(int(x+(w/2)-diff), int(x+(w/2)+diff+1)):
+        #     for row in range(int(y+h/2-diff),int(y+h/2+diff+1)):
+        #         frame[row][col] = [255,0,0]
+        frame[int(y+h/2)][int(x+w/2)] = [255, 0, 0]
+        # frame[int(y + h / 2) + 10][int(x + w / 2) + 10] = [255, 0, 0]
+        # frame[int(y + h / 2) - 10][int(x + w / 2) - 10] = [255, 0, 0]
+
     #change pixel colors
-    for i in range(100,200):
-        for j in range(20, 50):
-            frame[i][j] = [255,0,0]
-    print(frame[100][200])
+    # for i in range(100,200):
+    #     for j in range(20, 50):
+    #         frame[i][j] = [255,0,0]
 def paintFrame(frame):
     print("Encrypt frame")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
