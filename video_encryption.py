@@ -18,10 +18,10 @@ def EncryptVideo(video):
         ret, img = cap.read()
         if not ret:
             break
-        EncryptFrame(img)
+        paintFrame(img)
         out.write(img)
     cap.release()
-    out.release()
+    out.release()   
 
 
 def EncryptFrame(frame):
@@ -62,10 +62,10 @@ def watchVideo(video_file):
             break
     cap.release()
     cv2.destroyAllWindows()
-
-EncryptVideo("Videos/Video1.mp4")
-#watchVideo("Videos/Video1.mp4")
-watchVideo("Encrypted_Video.mp4")
+if __name__=='__main__':
+    EncryptVideo("Videos/KeanuGump.mp4")
+    #watchVideo("Videos/Video1.mp4")
+    watchVideo("Encrypted_Video.mp4")
 
 """
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
