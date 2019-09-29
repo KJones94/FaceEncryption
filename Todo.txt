@@ -1,0 +1,6 @@
+Find style template for website
+Add download link that appears when video is encrypted
+Add upload encrypted video to verify if encrypted
+Display checkmark, x-mark, or question mark after finished verifying
+Create verification code
+Change encryption algorithm to "mark" video outside of the face region so we know we have modified before
