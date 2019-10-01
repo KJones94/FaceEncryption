@@ -18,37 +18,94 @@ def EncryptVideo(video):
         ret, img = cap.read()
         if not ret:
             break
-        paintFrame(img)
+        img = EncryptFrame(img)
         out.write(img)
     cap.release()
     out.release()   
 
 
 def EncryptFrame(frame):
-    print("Encrypt frame")
+    # print("Encrypt frame")
+    # frame[0][0] = [255, 0, 0]
+    # frame[len(frame) - 1][0] = [255, 0, 0]
+    # frame[0][len(frame[0]) - 1] = [255, 0, 0]
+    # frame[len(frame) - 1][len(frame[0]) - 1] = [255, 0, 0]
+
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
-        # diff = 0
+        # diff = 10
+        #
         # for col in range(int(x+(w/2)-diff), int(x+(w/2)+diff+1)):
         #     for row in range(int(y+h/2-diff),int(y+h/2+diff+1)):
         #         frame[row][col] = [255,0,0]
-        frame[int(y+h/2)][int(x+w/2)] = [255, 0, 0]
+
+
+        print(int(y + h / 2), int(x + w / 2), frame[int(y + h / 2)][int(x + w / 2)])
+        # frame[int(y + h / 2)][int(x + w / 2)] = [255, 0, 0]
+        # frame[int(y+h/2), int(x+w/2), 0] = 255
+        # frame[int(y + h / 2), int(x + w / 2), 1] = 0
+        # frame[int(y + h / 2), int(x + w / 2), 2] = 0
         # frame[int(y + h / 2) + 10][int(x + w / 2) + 10] = [255, 0, 0]
         # frame[int(y + h / 2) - 10][int(x + w / 2) - 10] = [255, 0, 0]
 
-    #change pixel colors
-    # for i in range(100,200):
-    #     for j in range(20, 50):
-    #         frame[i][j] = [255,0,0]
+    return frame
+
+
+def WatermarkFrame(frame):
+    print(len(frame), len(frame[0]))
+    frame[0][0] = [255, 0, 0]
+    frame[len(frame) - 1][0] = [255, 0, 0]
+    frame[0][len(frame[0]) - 1] = [255, 0, 0]
+    frame[len(frame) - 1][len(frame[0]) - 1] = [255, 0, 0]
+
+def VerifyVideo(video):
+    cap = cv2.VideoCapture(video)
+    print(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)))
+    print(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    print("Do video verification")
+
+    isFrameVerified = True
+    while cap.isOpened():
+        ret, img = cap.read()
+        # if not ret or not isFrameVerified:
+        if not ret:
+            break
+        isFrameVerified = VerifyFrame(img)
+
+    cap.release()
+    return isFrameVerified
+
+def VerifyFrame(frame):
+    # print("Verify frame")
+    return VerifyFace(frame)
+
+def VerifyFace(frame):
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    for (x, y, w, h) in faces:
+        print(int(y + h / 2), int(x + w / 2), frame[int(y + h / 2)][int(x + w / 2)])
+        if not (frame[int(y + h / 2)][int(x + w / 2)] == [255, 0, 0]).all():
+            return False
+    return True
+
+def VerifyWatermark(frame):
+    print("Watermark")
+    print(frame[0][0])
+    rowMax = len(frame) - 1
+    colMax = len(frame[0]) - 1
+    return ((frame[0][0] == [255, 0, 0]).all() and
+            (frame[rowMax][0] == [255, 0, 0]).all() and
+            (frame[0][colMax] == [255, 0, 0]).all() and
+            (frame[rowMax][colMax] == [255, 0, 0]).all())
+
+
 def paintFrame(frame):
     print("Encrypt frame")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
         cv2.circle(frame, (int(x + w/2), int(y + h/2)), 1, (255,0,0), 5)
-    #gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    #faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
 def watchVideo(video_file):
     cap = cv2.VideoCapture(video_file)
@@ -62,23 +119,11 @@ def watchVideo(video_file):
             break
     cap.release()
     cv2.destroyAllWindows()
+
 if __name__=='__main__':
-    EncryptVideo("Videos/KeanuGump.mp4")
-    #watchVideo("Videos/Video1.mp4")
-    watchVideo("Encrypted_Video.mp4")
-
-"""
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-
-cap = cv2.VideoCapture("Videos/ForrestGump.mp4")
-
-while 1:
-    ret, img = cap.read(
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
-
-    for (x, y, w, h) in faces:
-        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-    """
+    EncryptVideo("Videos/Video1.mp4")
+    # watchVideo("Videos/Video1.mp4")
+    # watchVideo("Encrypted_Video.mp4")
+    print(VerifyVideo('Videos/Video1.mp4'))
 
 

@@ -5,3 +5,4 @@ Display checkmark, x-mark, or question mark after finished verifying
 Create verification code
 Change encryption algorithm to "mark" video outside of the face region so we know we have modified before
 Update .gitignore file for video outputs
+Why are the frames written to the new video different from the old video (no encryption)
