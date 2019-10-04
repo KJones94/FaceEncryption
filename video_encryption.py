@@ -1,5 +1,21 @@
 import cv2
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+def rewrite(video):
+    cap = cv2.VideoCapture(video)
+    out = cv2.VideoWriter(
+        'Video_Rewrite.mp4',
+        cv2.VideoWriter_fourcc('A','S','L','C'),
+        cap.get(cv2.CAP_PROP_FPS),
+        (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    )
+    print("Replicating el video")
+    while cap.isOpened():
+        ret, img = cap.read()
+        if not ret:
+            break
+        out.write(img)
+    cap.release()
+    out.release()
 
 def EncryptVideo(video):
     cap = cv2.VideoCapture(video)
@@ -7,7 +23,8 @@ def EncryptVideo(video):
     print(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     out = cv2.VideoWriter(
         'Encrypted_Video.mp4',
-        int(cap.get(cv2.CAP_PROP_FOURCC)),
+        # int(cap.get(cv2.CAP_PROP_FOURCC)),
+        cv2.VideoWriter_fourcc('A','S','L','C'),
         cap.get(cv2.CAP_PROP_FPS),
         (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
         int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -25,11 +42,12 @@ def EncryptVideo(video):
 
 
 def EncryptFrame(frame):
-    # print("Encrypt frame")
+    print("Encrypt frame")
     # frame[0][0] = [255, 0, 0]
     # frame[len(frame) - 1][0] = [255, 0, 0]
     # frame[0][len(frame[0]) - 1] = [255, 0, 0]
     # frame[len(frame) - 1][len(frame[0]) - 1] = [255, 0, 0]
+    WatermarkFrame(frame)
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
@@ -42,7 +60,7 @@ def EncryptFrame(frame):
 
 
         print(int(y + h / 2), int(x + w / 2), frame[int(y + h / 2)][int(x + w / 2)])
-        # frame[int(y + h / 2)][int(x + w / 2)] = [255, 0, 0]
+        frame[int(y + h / 2)][int(x + w / 2)] = [255, 0, 0]
         # frame[int(y+h/2), int(x+w/2), 0] = 255
         # frame[int(y + h / 2), int(x + w / 2), 1] = 0
         # frame[int(y + h / 2), int(x + w / 2), 2] = 0
@@ -78,7 +96,7 @@ def VerifyVideo(video):
 
 def VerifyFrame(frame):
     # print("Verify frame")
-    return VerifyFace(frame)
+    return VerifyWatermark(frame)
 
 def VerifyFace(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -121,9 +139,10 @@ def watchVideo(video_file):
     cv2.destroyAllWindows()
 
 if __name__=='__main__':
-    EncryptVideo("Videos/Video1.mp4")
+    rewrite('Videos/Video1.mp4')
+    EncryptVideo("Video_Rewrite.mp4")
     # watchVideo("Videos/Video1.mp4")
     # watchVideo("Encrypted_Video.mp4")
-    print(VerifyVideo('Videos/Video1.mp4'))
+    print(VerifyVideo('Encrypted_Video.mp4'))
 
 
