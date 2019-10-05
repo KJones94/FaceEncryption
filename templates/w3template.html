@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="/static/css/main.css">
+<!--<script type="text/javascript" src="/static/js/main.js"/>-->
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 .w3-bar,h1,button {font-family: "Montserrat", sans-serif}
@@ -50,10 +51,19 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
 <!-- Test Grid -->
 <div class="w3-row-padding w3-padding-64 w3-container">
   <div class="w3-content">
-    <form action="http://localhost:5000/api/encryptVideo" method="post" enctype="multipart/form-data" target="dummyframe">
+    <form action="http://localhost:5000/api/encryptVideo" method="post" enctype="multipart/form-data">
 <!--      https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/-->
-      <input type="file" name="video" accept="video/*" id="file" class="inputfile" onchange="form.submit()">
-      <label for="file" class="w3-btn w3-red">Choose a Video</label>
+      <input type="file" name="video" accept="video/*" id="encrypt" class="inputfile" onchange="form.submit()">
+      <label for="encrypt" class="w3-btn w3-red">Encrypt a Video</label>
+<!--      <i class="fa fa-spinner w3-spin" style="font-size:64px"></i>-->
+    </form>
+    <a href="api/encryptVideo" download>Download</a>
+  </div>
+  <div class="w3-content">
+    <form action="http://localhost:5000/api/verifyVideo" method="post" enctype="multipart/form-data" target="dummyframe">
+<!--      https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/-->
+      <input type="file" name="video" accept="video/*" id="verify" class="inputfile" onchange="form.submit()">
+      <label for="verify" class="w3-btn w3-red">Verify a Video</label>
 <!--      <i class="fa fa-spinner w3-spin" style="font-size:64px"></i>-->
     </form>
   </div>

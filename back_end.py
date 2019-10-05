@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask import request
 from flask import render_template
 from flask import send_file
@@ -10,7 +10,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello_world():
-    return render_template('./industry/industry/Industry - Doc/index.html')
+    return render_template('w3template.html')
 @app.route('/api/encryptVideo',methods = ['POST', 'GET'])
 def encrypt_video():
     # print("Form", request.form)
@@ -20,16 +20,25 @@ def encrypt_video():
     # print("files", request.files)
     if request.method == 'POST':
         file = request.files.get('video')
-        file.save('SavedVideo.mp4')
-        encrypt.EncryptVideo('SavedVideo.mp4')
-        return redirect('/api/encryptVideo')
+        file.save('SavedVideo.avi')
+        encrypt.EncryptVideo('SavedVideo.avi')
+        # return redirect('/api/encryptVideo')
+        return jsonify({"link":"/api/encryptVideo"})
     if request.method == 'GET':
         try:
-            return send_file('Encrypted_Video.mp4',
-                             attachment_filename='video.mp4',
+            return send_file('Encrypted_Video.avi',
+                             attachment_filename='Encrypted_Video.avi',
                              as_attachment=True)
         except Exception as e:
             return str(e)
+
+@app.route('/api/verifyVideo',methods = ['POST'])
+def verify_video():
+    file = request.files.get('video')
+    file.save('VerifyVideo.avi')
+    result = str(encrypt.VerifyVideo('VerifyVideo.avi'))
+    return result
+
 
 if __name__ == '__main__':
     app.run()
