@@ -3,8 +3,14 @@ face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 def rewrite(video):
     cap = cv2.VideoCapture(video)
     out = cv2.VideoWriter(
-        'Video_Rewrite.mp4',
-        cv2.VideoWriter_fourcc('A','S','L','C'),
+        'Video_Rewrite.avi',
+        # cv2.VideoWriter_fourcc('H','F','Y','U'),
+        # int(cap.get(cv2.CAP_PROP_FOURCC)),
+        cv2.VideoWriter_fourcc('F','F','V','1'),
+        # cv2.VideoWriter_fourcc('M','J','2','C'),
+        # cv2.VideoWriter_fourcc('X','2','6','4'),
+        # -1,
+        # 0,
         cap.get(cv2.CAP_PROP_FPS),
         (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     )
@@ -13,6 +19,7 @@ def rewrite(video):
         ret, img = cap.read()
         if not ret:
             break
+        # print(img[0][0])
         out.write(img)
     cap.release()
     out.release()
@@ -22,9 +29,12 @@ def EncryptVideo(video):
     print(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)))
     print(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     out = cv2.VideoWriter(
-        'Encrypted_Video.mp4',
+        # 'Encrypted_Video.mp4',
+        'Encrypted_Video.avi',
         # int(cap.get(cv2.CAP_PROP_FOURCC)),
-        cv2.VideoWriter_fourcc('A','S','L','C'),
+        # cv2.VideoWriter_fourcc('A','S','L','C'),
+        # cv2.VideoWriter_fourcc('D','I','V','X'),
+        cv2.VideoWriter_fourcc('F','F','V','1'),
         cap.get(cv2.CAP_PROP_FPS),
         (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
         int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -140,9 +150,11 @@ def watchVideo(video_file):
 
 if __name__=='__main__':
     rewrite('Videos/Video1.mp4')
-    EncryptVideo("Video_Rewrite.mp4")
+    # rewrite('Video_Rewrite.avi')
+    # EncryptVideo("Video_Rewrite.mp4")
+    EncryptVideo("Video_Rewrite.avi")
     # watchVideo("Videos/Video1.mp4")
     # watchVideo("Encrypted_Video.mp4")
-    print(VerifyVideo('Encrypted_Video.mp4'))
+    print(VerifyVideo('Encrypted_Video.avi'))
 
 
