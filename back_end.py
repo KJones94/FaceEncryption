@@ -8,9 +8,10 @@ app = Flask(__name__)
 
 
 
-@app.route('/')
+@app.route('/', methods=['POST', 'GET'])
 def hello_world():
     return render_template('w3template.html')
+    # return render_template('index.html')
 @app.route('/api/encryptVideo',methods = ['POST', 'GET'])
 def encrypt_video():
     # print("Form", request.form)
@@ -18,6 +19,7 @@ def encrypt_video():
     # file = request.files.get('video')
     # print("form", request.form.get('video'))
     # print("files", request.files)
+    print(request.method)
     if request.method == 'POST':
         file = request.files.get('video')
         file.save('SavedVideo.avi')
@@ -37,7 +39,7 @@ def verify_video():
     file = request.files.get('video')
     file.save('VerifyVideo.avi')
     result = str(encrypt.VerifyVideo('VerifyVideo.avi'))
-    return result
+    return jsonify({"result": str(result)})
 
 
 if __name__ == '__main__':
