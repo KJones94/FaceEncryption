@@ -13,6 +13,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/static/css/main.css">
   <script language="Javascript" src="/static/js/main.js"></script>
+    <script>
+function myFunction(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
   <style>
     body,
     h1,
@@ -40,10 +50,13 @@
 <body>
 
   <!-- Header -->
-  <header class="w3-container w3-red w3-center" style="padding:128px 16px">
-    <h1 class="w3-margin w3-jumbo">START PAGE</h1>
-    <p class="w3-xlarge">Protect your information</p>
-    <button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Started</button>
+  <header class="w3-display-container w3-container w3-black w3-center" >
+    <img class = "w3-opacity" src="../static/img/Moon.jpg" alt = "Background Moon" style = "width:40%;height:40%">
+      <div class="w3-display-middle">
+        <h1 class="w3-margin w3-jumbo">IMPRINTV</h1>
+        <p class="w3-xlarge">Protect your information</p>
+      </div>
+    <!--<button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Pranked</button>-->
   </header>
 
   <!--https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection/30666118-->
@@ -53,13 +66,15 @@
 
   <!-- Test Grid -->
   <div class="w3-row-padding w3-padding-64 w3-container">
-    <div class="w3-content" id="encryptContainer">
+    <div class="w3-content w3-center w3-half" id="encryptContainer">
       <form id="encryptForm" method="post" enctype="multipart/form-data" onsubmit="submitEncryptForm(); return false;">
         <input type="file" name="video" accept="video/*" id="encrypt" class="inputfile" onchange="form.onsubmit()">
         <label for="encrypt" class="w3-btn w3-red">Encrypt a Video</label>
       </form>
+
+
     </div>
-    <div class="w3-content" id="verifyContainer">
+    <div class="w3-content w3-center w3-half" id="verifyContainer">
       <form id="verifyForm" method="post" enctype="multipart/form-data" onsubmit="submitVerifyForm(); return false;">
         <input type="file" name="video" accept="video/*" id="verify" class="inputfile" onchange="form.onsubmit()">
         <label for="verify" class="w3-btn w3-red">Verify a Video</label>
@@ -67,24 +82,27 @@
     </div>
   </div>
 
-  <div class="w3-container w3-black w3-center w3-opacity w3-padding-64">
+  <!--Another container-->
+
+
+
+
+  <div class="w3-container w3-red w3-center w3-padding-64">
+      <button onclick="myFunction('Demo1')" class="w3-btn w3-block w3-amber w3-text-black w3-center-align">Mission</button>
+      <div id="Demo1" class="w3-container w3-hide w3-white">
+        <h4>I like B-</h4>
+        <p>ig BUTTS and I cannot lie</p>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Download this</a>
+      </div>
+
   </div>
 
   <!-- Footer -->
   <footer class="w3-container w3-padding-64 w3-center w3-opacity">
+      <p>So I (74M) was recently hit by a car (2014 Honda) and died. My wife (5F) organized me a funeral (cost $2747) without asking me (74M) at all. I (74M) was unable to make it because I (74M) was dead (17 days). At the funeral I heard my dad (15M) and other family members talking about how they wish I could be there and now I feel bad for not showing up. AITA?</p>
   </footer>
 
   <script>
-    // Used to toggle the menu on small screens when clicking on the menu button
-    function myFunction() {
-      var x = document.getElementById("navDemo");
-      if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-      } else {
-        x.className = x.className.replace(" w3-show", "");
-      }
-    }
-  </script>
 
 </body>
 
