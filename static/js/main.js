@@ -84,13 +84,19 @@ const submitVerifyForm = async () => {
 }
 
 function showVerificationResult(container, result) {
-  if (result) {
+  if (result === 2) {
+    var question = document.createElement('i')
+    question.className = "fa fa-question"
+    question.style = "font-size:64px"
+    container.appendChild(question)
+  }
+  else if (result === 1) {
     var checkmark = document.createElement('i')
     checkmark.className = "fa fa-check"
     checkmark.style = "font-size:64px"
     container.appendChild(checkmark)
   }
-  else {
+  else if (result === 0) {
     var xmark = document.createElement('i')
     xmark.className = "fa fa-times"
     xmark.style = "font-size:64px"
