@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+<!--https://www.w3schools.com/w3css/tryw3css_templates_start_page.htm-->
 
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
   <title>Imprintv</title>
-
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -13,19 +13,101 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="/static/css/main.css">
   <script language="Javascript" src="/static/js/main.js"></script>
+  <script>
+    function myFunction(id) {
+      var x = document.getElementById(id);
+      if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+      } else {
+        x.className = x.className.replace(" w3-show", "");
+      }
+    }
+  </script>
+  <style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Lato", sans-serif
+    }
 
+    .w3-bar,
+    h1,
+    button {
+      font-family: "Montserrat", sans-serif
+    }
+
+    .fa-anchor,
+    .fa-coffee {
+      font-size: 200px
+    }
+  </style>
 </head>
 
 <body>
-  <p>
-    <form id="myForm" method="post" enctype="multipart/form-data" onsubmit="submitForm(); return false;">
-      <input type="file" name="video" id="verify" accept="video/*">
-      <button type="submit">I submit!</button>
-    </form>
-  </p>
-  <p id="paragraph">
-    <button onclick="createLink()">Click Me</button>
-  </p>
-</body>
 
-</html>
+  <!-- Header -->
+  <header class="w3-display-container w3-container w3-black w3-center">
+    <img class="w3-opacity" src="/static/img/Moon.jpg" alt="Background Moon" style="width:40%;height:40%">
+    <div class="w3-display-middle">
+      <h1 class="w3-margin w3-jumbo">IMPRINTV</h1>
+      <p class="w3-xlarge">Protect your information</p>
+    </div>
+    <!--<button class="w3-button w3-black w3-padding-large w3-large w3-margin-top">Get Pranked</button>-->
+  </header>
+
+  <!--https://stackoverflow.com/questions/25983603/how-to-submit-html-form-without-redirection/30666118-->
+  <!--      https://tympanus.net/codrops/2015/09/15/styling-customizing-file-inputs-smart-way/-->
+  <!-- <iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe> -->
+  <!--      <i class="fa fa-spinner w3-spin" style="font-size:64px"></i>-->
+
+  <!-- Test Grid -->
+  <div class="w3-row-padding w3-padding-64 w3-container">
+    <div class="w3-content w3-center w3-half" id="encryptContainer">
+      <form id="encryptForm" method="post" enctype="multipart/form-data" onsubmit="submitEncryptForm(); return false;">
+        <input type="file" name="video" accept="video/*" id="encrypt" class="inputfile" onchange="form.onsubmit()">
+        <label for="encrypt" class="w3-btn w3-red">Encrypt a Video</label>
+      </form>
+      <div id="encryptDownloadArea" class="w3-padding-16">
+
+      </div>
+
+    </div>
+    <div class="w3-content w3-center w3-half" id="verifyContainer">
+      <form id="verifyForm" method="post" enctype="multipart/form-data" onsubmit="submitVerifyForm(); return false;">
+        <input type="file" name="video" accept="video/*" id="verify" class="inputfile" onchange="form.onsubmit()">
+        <label for="verify" class="w3-btn w3-red">Verify a Video</label>
+      </form>
+      <div id="verifyDownloadArea" class="w3-padding-16">
+
+      </div>
+    </div>
+  </div>
+
+  <!--Another container-->
+
+
+
+
+  <div class="w3-container w3-red w3-center w3-padding-64">
+      <button onclick="myFunction('Demo1')" class="w3-btn w3-block w3-amber w3-text-black w3-center-align">Mission</button>
+      <div id="Demo1" class="w3-container w3-hide w3-white">
+        <h4>What is IMPRINTV?</h4>
+        <p>Imprintv is a webservice created to add a layer of security to your data. First, you encrypt your videos through our website. Then, any video can be run through our verification algorithm, and the video will be identified as either a the original, or a copy.</p>
+          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank">Download this</a>
+      </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="w3-container w3-padding-64 w3-center w3-opacity">
+      <p>Alex Liang</p>
+  </footer>
+
+  <script>
+
+</body >
+
+</html >

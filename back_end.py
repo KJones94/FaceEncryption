@@ -10,8 +10,7 @@ app = Flask(__name__)
 
 @app.route('/', methods=['POST', 'GET'])
 def hello_world():
-    return render_template('w3template.html')
-    # return render_template('index.html')
+    return render_template('index.html')
 @app.route('/api/encryptVideo',methods = ['POST', 'GET'])
 def encrypt_video():
     print(request.method)
