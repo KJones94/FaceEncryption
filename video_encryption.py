@@ -53,29 +53,13 @@ def EncryptVideo(video):
 
 def EncryptFrame(frame):
     print("Encrypt frame")
-    # frame[0][0] = [255, 0, 0]
-    # frame[len(frame) - 1][0] = [255, 0, 0]
-    # frame[0][len(frame[0]) - 1] = [255, 0, 0]
-    # frame[len(frame) - 1][len(frame[0]) - 1] = [255, 0, 0]
     WatermarkFrame(frame)
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
-        # diff = 10
-        #
-        # for col in range(int(x+(w/2)-diff), int(x+(w/2)+diff+1)):
-        #     for row in range(int(y+h/2-diff),int(y+h/2+diff+1)):
-        #         frame[row][col] = [255,0,0]
-
-
         print(int(y + h / 2), int(x + w / 2), frame[int(y + h / 2)][int(x + w / 2)])
         frame[int(y + h / 2)][int(x + w / 2)] = [255, 0, 0]
-        # frame[int(y+h/2), int(x+w/2), 0] = 255
-        # frame[int(y + h / 2), int(x + w / 2), 1] = 0
-        # frame[int(y + h / 2), int(x + w / 2), 2] = 0
-        # frame[int(y + h / 2) + 10][int(x + w / 2) + 10] = [255, 0, 0]
-        # frame[int(y + h / 2) - 10][int(x + w / 2) - 10] = [255, 0, 0]
 
     return frame
 
@@ -96,8 +80,7 @@ def VerifyVideo(video):
     isFrameVerified = True
     while cap.isOpened():
         ret, img = cap.read()
-        # if not ret or not isFrameVerified:
-        if not ret:
+        if not ret or isFrameVerified == 0 or isFrameVerified == 2:
             break
         isFrameVerified = VerifyFrame(img)
 
@@ -105,8 +88,11 @@ def VerifyVideo(video):
     return isFrameVerified
 
 def VerifyFrame(frame):
-    # print("Verify frame")
-    return VerifyWatermark(frame)
+    watermarkResult = VerifyWatermark(frame)
+    if watermarkResult == 2:
+        return watermarkResult
+    return VerifyFace(frame)
+
 
 def VerifyFace(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
@@ -114,18 +100,22 @@ def VerifyFace(frame):
     for (x, y, w, h) in faces:
         print(int(y + h / 2), int(x + w / 2), frame[int(y + h / 2)][int(x + w / 2)])
         if not (frame[int(y + h / 2)][int(x + w / 2)] == [255, 0, 0]).all():
-            return False
-    return True
+            return 0
+    return 1
 
 def VerifyWatermark(frame):
     print("Watermark")
     print(frame[0][0])
     rowMax = len(frame) - 1
     colMax = len(frame[0]) - 1
-    return ((frame[0][0] == [255, 0, 0]).all() and
+    isWatermarked = ((frame[0][0] == [255, 0, 0]).all() and
             (frame[rowMax][0] == [255, 0, 0]).all() and
             (frame[0][colMax] == [255, 0, 0]).all() and
             (frame[rowMax][colMax] == [255, 0, 0]).all())
+    if isWatermarked:
+      return 1
+    else:
+      return 2
 
 
 def paintFrame(frame):
