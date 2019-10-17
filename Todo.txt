@@ -1,4 +1,8 @@
-Add download link that appears when video is encrypted
-Display checkmark, x-mark, or question mark after finished verifying
 Update .gitignore file for video outputs
-Do we want to return static HTML files or dynamically make changes on the webpage?
+Video demo
+    Problem
+        Side-by-side of video and its deepfake
+    Solution
+        Show original video
+        Show encrypted+watermarked original
+        Show deepfake with only watermarks

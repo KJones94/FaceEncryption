@@ -48,7 +48,34 @@ def EncryptVideo(video):
         img = EncryptFrame(img)
         out.write(img)
     cap.release()
-    out.release()   
+    out.release()
+
+def PaintVideo(video):
+    cap = cv2.VideoCapture(video)
+    print(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)))
+    print(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    out = cv2.VideoWriter(
+        # 'Encrypted_Video.mp4',
+        'Painted_Video.avi',
+        # int(cap.get(cv2.CAP_PROP_FOURCC)),
+        # cv2.VideoWriter_fourcc('A','S','L','C'),
+        # cv2.VideoWriter_fourcc('D','I','V','X'),
+        cv2.VideoWriter_fourcc('F','F','V','1'),
+        cap.get(cv2.CAP_PROP_FPS),
+        (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
+        int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    )
+    print("Do video paint")
+
+    while cap.isOpened():
+        ret, img = cap.read()
+        if not ret:
+            break
+        # img = paintFrame(img)
+        img = paintWatermark(img)
+        out.write(img)
+    cap.release()
+    out.release()
 
 
 def EncryptFrame(frame):
@@ -119,11 +146,22 @@ def VerifyWatermark(frame):
 
 
 def paintFrame(frame):
-    print("Encrypt frame")
+    print("Paint frame")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x, y, w, h) in faces:
         cv2.circle(frame, (int(x + w/2), int(y + h/2)), 1, (255,0,0), 5)
+    return frame
+
+def paintWatermark(frame):
+    print("Watermark")
+    rowMax = len(frame) - 1
+    colMax = len(frame[0]) - 1
+    cv2.rectangle(frame, (0, 0), (5, 5), (0, 0, 255), -1)
+    cv2.rectangle(frame, (colMax - 5, 0), (colMax, 5), (0, 0, 255), -1)
+    cv2.rectangle(frame, (0, rowMax - 5), (5, rowMax), (0, 0, 255), -1)
+    cv2.rectangle(frame, (colMax - 5, rowMax - 5), (colMax, rowMax), (0, 0, 255), -1)
+    return frame
 
 def watchVideo(video_file):
     cap = cv2.VideoCapture(video_file)
@@ -139,12 +177,13 @@ def watchVideo(video_file):
     cv2.destroyAllWindows()
 
 if __name__=='__main__':
-    rewrite('Videos/Video1.mp4')
-    # rewrite('Video_Rewrite.avi')
-    # EncryptVideo("Video_Rewrite.mp4")
-    EncryptVideo("Video_Rewrite.avi")
+    # rewrite('Videos/Gump_LowRes.mp4')
+    # rewrite('Videos/Video1.mp4')
+    # EncryptVideo("Videos/Gump_LowRes.mp4")
+    # EncryptVideo("Video_Rewrite.avi")
     # watchVideo("Videos/Video1.mp4")
-    # watchVideo("Encrypted_Video.mp4")
-    print(VerifyVideo('Encrypted_Video.avi'))
+    PaintVideo("Videos/Keanu_LowRes.mp4")
+    # watchVideo("Painted_Video.avi")
+    # print(VerifyVideo('Encrypted_Video.avi'))
 
 
