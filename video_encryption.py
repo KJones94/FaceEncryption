@@ -3,7 +3,7 @@ face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
 def rewrite(video):
     cap = cv2.VideoCapture(video)
     out = cv2.VideoWriter(
-        'Video_Rewrite.avi',
+        'Gump.avi',
         # cv2.VideoWriter_fourcc('H','F','Y','U'),
         # int(cap.get(cv2.CAP_PROP_FOURCC)),
         cv2.VideoWriter_fourcc('F','F','V','1'),
@@ -50,17 +50,16 @@ def EncryptVideo(video):
     cap.release()
     out.release()
 
-def PaintVideo(video):
+def PaintVideo(video, newName="Painted_Video.mp4", doPaintFace=True):
     cap = cv2.VideoCapture(video)
     print(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)))
     print(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     out = cv2.VideoWriter(
-        # 'Encrypted_Video.mp4',
-        'Painted_Video.avi',
-        # int(cap.get(cv2.CAP_PROP_FOURCC)),
+        newName,
+        int(cap.get(cv2.CAP_PROP_FOURCC)),
         # cv2.VideoWriter_fourcc('A','S','L','C'),
         # cv2.VideoWriter_fourcc('D','I','V','X'),
-        cv2.VideoWriter_fourcc('F','F','V','1'),
+        # cv2.VideoWriter_fourcc('F','F','V','1'),
         cap.get(cv2.CAP_PROP_FPS),
         (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
         int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
@@ -71,7 +70,7 @@ def PaintVideo(video):
         ret, img = cap.read()
         if not ret:
             break
-        # img = paintFrame(img)
+        # img = paintFrame(img, doPaintFace)
         img = paintWatermark(img)
         out.write(img)
     cap.release()
@@ -145,22 +144,25 @@ def VerifyWatermark(frame):
       return 2
 
 
-def paintFrame(frame):
+def paintFrame(frame, doPaintFace):
     print("Paint frame")
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 7)
     for (x, y, w, h) in faces:
-        cv2.circle(frame, (int(x + w/2), int(y + h/2)), 1, (255,0,0), 5)
+        cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        if doPaintFace:
+            cv2.circle(frame, (int(x + w/2), int(y + h/2)), 1, (255,0,0), 10)
     return frame
 
 def paintWatermark(frame):
     print("Watermark")
     rowMax = len(frame) - 1
     colMax = len(frame[0]) - 1
-    cv2.rectangle(frame, (0, 0), (5, 5), (0, 0, 255), -1)
-    cv2.rectangle(frame, (colMax - 5, 0), (colMax, 5), (0, 0, 255), -1)
-    cv2.rectangle(frame, (0, rowMax - 5), (5, rowMax), (0, 0, 255), -1)
-    cv2.rectangle(frame, (colMax - 5, rowMax - 5), (colMax, rowMax), (0, 0, 255), -1)
+    watermarkSize = 10
+    cv2.rectangle(frame, (0, 0), (watermarkSize, watermarkSize), (0, 0, 255), -1)
+    cv2.rectangle(frame, (colMax - watermarkSize, 0), (colMax, watermarkSize), (0, 0, 255), -1)
+    cv2.rectangle(frame, (0, rowMax - watermarkSize), (watermarkSize, rowMax), (0, 0, 255), -1)
+    cv2.rectangle(frame, (colMax - watermarkSize, rowMax - watermarkSize), (colMax, rowMax), (0, 0, 255), -1)
     return frame
 
 def watchVideo(video_file):
@@ -182,7 +184,8 @@ if __name__=='__main__':
     # EncryptVideo("Videos/Gump_LowRes.mp4")
     # EncryptVideo("Video_Rewrite.avi")
     # watchVideo("Videos/Video1.mp4")
-    PaintVideo("Videos/Keanu_LowRes.mp4")
+    PaintVideo("Videos/MessUp.avi", "MessUp.avi")
+    # PaintVideo("Videos/Keanu_LowRes_Short.mp4", "Keanu_Deepfake.mp4", False)
     # watchVideo("Painted_Video.avi")
     # print(VerifyVideo('Encrypted_Video.avi'))
 
