@@ -1,105 +1,203 @@
-// const formSubmit = async () => {
-//   const response = await fetch("http://localhost:5000/api/encryptVideo", {
-//     method: "POST",
-//     body: document.getElementById("verify").value,
-//     headers: {
-//       "Content-Type": "multipart/form-data"
-//     }
-//   });
-//   const json = await response.json()
-//   var downloadLink = document.createElement("a")
-//   downloadLink.href = json["link"]
-//   downloadLink.text = "Download"
-//   document.body.appendChild(downloadLink)
-// }
+(function ($) {
 
-// function createLink(link) {
-//   var paragraph = document.getElementById("paragraph")
-//   var a = document.createElement("a")
-//   a.href = link
-//   a.innerHTML = "Link"
-//   paragraph.appendChild(a)
-// }
+    "use strict";
+    $(".carousel-inner .item:first-child").addClass("active");
+    /* Mobile menu click then remove
+    ==========================*/
+    $(".mainmenu-area #mainmenu li a").on("click", function () {
+        $(".navbar-collapse").removeClass("in");
+    });
+    /*WoW js Active
+    =================*/
+    new WOW().init({
+        mobile: true,
+    });
+    /* Scroll to top
+    ===================*/
+    $.scrollUp({
+        scrollText: '<i class="fa fa-angle-up"></i>',
+        easingType: 'linear',
+        scrollSpeed: 900,
+        animation: 'fade'
+    });
+    /* testimonials Slider Active
+    =============================*/
+    $('.testimonials').owlCarousel({
+        loop: true,
+        margin: 0,
+        responsiveClass: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        smartSpeed: 1000,
+        navText: ['<i class="ti-arrow-left"></i>', '<i class="ti-arrow-right" ></i>'],
+        items: 1
+    });
+    /* testimonials Slider Active
+    =============================*/
+    $('.screen-slider').owlCarousel({
+        loop: true,
+        margin: 0,
+        responsiveClass: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        smartSpeed: 1000,
+        navText: ['<i class="ti-arrow-left"></i>', '<i class="ti-arrow-right" ></i>'],
+        items: 1,
+        animateIn: 'fadeIn',
+        animateOut: 'fadeOut',
+        center: true,
+    });
+    /* testimonials Slider Active
+    =============================*/
+    $('.clients').owlCarousel({
+        loop: true,
+        margin: 30,
+        responsiveClass: true,
+        nav: true,
+        autoplay: true,
+        autoplayTimeout: 4000,
+        smartSpeed: 1000,
+        navText: ['<i class="ti-arrow-left"></i>', '<i class="ti-arrow-right" ></i>'],
+        responsive: {
+            0: {
+                items: 3,
+            },
+            600: {
+                items: 4
+            },
+            1000: {
+                items: 6
+            }
+        }
+    });
+    /*--------------------
+       MAGNIFIC POPUP JS
+       ----------------------*/
+    var magnifPopup = function () {
+        $('.work-popup').magnificPopup({
+            type: 'image',
+            removalDelay: 300,
+            mainClass: 'mfp-with-zoom',
+            gallery: {
+                enabled: true
+            },
+            zoom: {
+                enabled: true, // By default it's false, so don't forget to enable it
 
-// const submitForm = async (e) => {
-//   // e.preventDefault();
-//   console.log("hello")
-//   var formData = new FormData(document.getElementById("myForm"))
-//   console.log(formData)
-//   // formData.append("verify", document.getElementById("verify").value)
-//   const response = await fetch("/api/encryptVideo", {
-//     method: "POST",
-//     body: formData
-//   });
-//   const json = await response.json()
-//   console.log(response)
-//   console.log(json)
-//   createLink(json["link"])
-// }
+                duration: 300, // duration of the effect, in milliseconds
+                easing: 'ease-in-out', // CSS transition easing function
 
-const submitEncryptForm = async () => {
-  var container = document.getElementById("encryptDownloadArea")
-  removeChildElements(container)
-  createSpinner(container)
-  var formData = new FormData(document.getElementById("encryptForm"))
-  const response = await fetch("/api/encryptVideo", {
-    method: "POST",
-    body: formData
-  });
-  const json = await response.json()
-  removeChildElements(container)
-  var a = document.createElement("a")
-  a.href = json["link"]
-  a.innerHTML = "Encrypted Video Download"
-  container.appendChild(a)
-}
+                // The "opener" function should return the element from which popup will be zoomed in
+                // and to which popup will be scaled down
+                // By defailt it looks for an image tag:
+                opener: function (openerElement) {
+                    // openerElement is the element on which popup was initialized, in this case its <a> tag
+                    // you don't need to add "opener" option if this code matches your needs, it's defailt one.
+                    return openerElement.is('img') ? openerElement : openerElement.find('img');
+                }
+            }
+        });
+    };
+    // Call the functions 
+    magnifPopup();
+
+    //Background Parallax
+    $('.header-area').parallax("50%", -0.4);
+    $('.price-area').parallax("50%", -0.5);
+    $('.testimonial-area').parallax("10%", -0.2);
+
+
+    $('#accordion .panel-title a').prepend('<span></span>');
 
 
 
-function createSpinner(container) {
-  var spinner = document.createElement("i")
-  spinner.className = "fa fa-spinner w3-spin"
-  spinner.style = "font-size:64px"
-  container.appendChild(spinner)
-}
 
-function removeChildElements(container) {
-  while (container.firstChild) {
-    container.removeChild(container.firstChild)
-  }
-}
 
-const submitVerifyForm = async () => {
-  var container = document.getElementById("verifyDownloadArea")
-  removeChildElements(container)
-  createSpinner(container)
-  var formData = new FormData(document.getElementById("verifyForm"))
-  const response = await fetch("/api/verifyVideo", {
-    method: "POST",
-    body: formData
-  });
-  const json = await response.json()
-  removeChildElements(container)
-  showVerificationResult(container, json["result"])
-}
 
-function showVerificationResult(container, result) {
-  if (result === 2) {
-    var question = document.createElement('i')
-    question.className = "fa fa-question"
-    question.style = "font-size:64px"
-    container.appendChild(question)
-  }
-  else if (result === 1) {
-    var checkmark = document.createElement('i')
-    checkmark.className = "fa fa-check"
-    checkmark.style = "font-size:64px"
-    container.appendChild(checkmark)
-  }
-  else if (result === 0) {
-    var xmark = document.createElement('i')
-    xmark.className = "fa fa-times"
-    xmark.style = "font-size:64px"
-    container.appendChild(xmark)
-  }
-}
+    //Function to animate slider captions 
+    function doAnimations(elems) {
+        //Cache the animationend event in a variable
+        var animEndEv = 'webkitAnimationEnd animationend';
+
+        elems.each(function () {
+            var $this = $(this),
+                $animationType = $this.data('animation');
+            $this.addClass($animationType).one(animEndEv, function () {
+                $this.removeClass($animationType);
+            });
+        });
+    }
+
+    //Variables on page load 
+    var $myCarousel = $('.caption-slider'),
+        $firstAnimatingElems = $myCarousel.find('.item:first').find("[data-animation ^= 'animated']");
+
+    //Initialize carousel 
+    $myCarousel.carousel();
+
+    //Animate captions in first slide on page load 
+    doAnimations($firstAnimatingElems);
+
+    //Pause carousel  
+    $myCarousel.carousel('pause');
+
+
+    //Other slides to be animated on carousel slide event 
+    $myCarousel.on('slide.bs.carousel', function (e) {
+        var $animatingElems = $(e.relatedTarget).find("[data-animation ^= 'animated']");
+        doAnimations($animatingElems);
+    });
+
+
+
+
+
+    // Select all links with hashes
+    $('.mainmenu-area a[href*="#"]')
+        // Remove links that don't actually link to anything
+        .not('[href="#"]')
+        .not('[href="#0"]')
+        .click(function (event) {
+            // On-page links
+            if (
+                location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
+                location.hostname == this.hostname
+            ) {
+                // Figure out element to scroll to
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                // Does a scroll target exist?
+                if (target.length) {
+                    // Only prevent default if animation is actually gonna happen
+                    event.preventDefault();
+                    $('html, body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000, function () {
+                        // Callback after animation
+                        // Must change focus!
+                        var $target = $(target);
+                        $target.focus();
+                        if ($target.is(":focus")) { // Checking if the target was focused
+                            return false;
+                        } else {
+                            $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                            $target.focus(); // Set focus again
+                        };
+                    });
+                }
+            }
+        });
+
+
+
+
+
+
+    /* Preloader Js
+    ===================*/
+    $(window).on("load", function () {
+        $('.preloader').fadeOut(500);
+    });
+})(jQuery);
