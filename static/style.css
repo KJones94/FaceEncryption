@@ -134,6 +134,10 @@ input:-webkit-autofill:focus {
     padding: 120px 0;
 }
 
+.light-margin {
+    bottom-margin: 40px;
+}
+
 .social-menu {
     list-style: none;
     margin: 0;
@@ -368,7 +372,7 @@ input:-webkit-autofill:focus {
 
 .client-area,
 .header-area {
-    background: #000000 url('images/parallax-2.jpg') no-repeat scroll center center / cover;
+    background: #000000 url('images/logo1.png') no-repeat scroll center center / cover;
 }
 
 .anlge-bg {
@@ -390,12 +394,21 @@ input:-webkit-autofill:focus {
 }
 
 .header-text h2 {
-    margin-bottom: 20px;
-    font-size: 40px;
+    margin-bottom: 40px;
+    font-size: 80px;
 }
 
 .header-text .button {
     margin-top: 30px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
 }
 
 .screen-slider .item {

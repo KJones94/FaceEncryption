@@ -25,6 +25,10 @@
     <link rel="stylesheet" href="static/css/responsive.css">
     <script src="static/js/vendor/modernizr-2.8.3.min.js"></script>
 
+    <!--  Needed for Encrypt and Verify buttons  -->
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!--[if lt IE 9]>
         <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -52,7 +56,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a href="#" class="navbar-brand logo">
-                    <h2>colid</h2>
+                    <h2>Imprintv</h2>
                 </a>
             </div>
             <!--Logo/-->
@@ -76,31 +80,41 @@
 
     <!--Header-area-->
     <header class="header-area overlay full-height relative v-center" id="home-page">
-        <div class="absolute anlge-bg"></div>
+<!--        <div class="absolute anlge-bg"></div>-->
         <div class="container">
-            <div class="row v-center">
-                <div class="col-xs-12 col-md-7 header-text">
-                    <h2>It’s all about Promoting your Business</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero ex inventore vel error quibusdam animi fugiat, doloribus dolores consectetur nulla deleniti sint blanditiis quod debitis quis vitae officiis tempora numquam.</p>
-                    <a href="#" class="button white">Watch video</a>
+            <div class="row">
+                <div class="col-xs-12 col-md-12 header-text">
+                    <h2 class="text-center">Imprintv</h2>
                 </div>
-                <div class="hidden-xs hidden-sm col-md-5 text-right">
-                    <div class="screen-box screen-slider">
-                        <div class="item">
-                            <img src="static/images/screen-1.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img src="static/images/screen-2.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img src="static/images/screen-3.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img src="static/images/screen-4.jpg" alt="">
-                        </div>
-                        <div class="item">
-                            <img src="static/images/screen-5.jpg" alt="">
-                        </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-md-4 col-md-offset-4">
+                    <p class="text-center">Simple description on how to use.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <div id="encryptContainer">
+                        <form id="encryptForm" method="post" enctype="multipart/form-data" onsubmit="submitEncryptForm(); return false;">
+                            <input type="file" name="video" accept="video/*" id="encrypt" class="inputfile" onchange="form.onsubmit()">
+                            <label for="encrypt" class="w3-btn w3-white w3-text-blue w3-round-xxlarge">Encrypt a Video</label>
+                        </form>
+
+                        <div id="encryptDownloadArea">
+
+                      </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4 col-md-offset-4">
+                    <div class="text-center" id="verifyContainer">
+                      <form id="verifyForm" method="post" enctype="multipart/form-data" onsubmit="submitVerifyForm(); return false;">
+                        <input type="file" name="video" accept="video/*" id="verify" class="inputfile" onchange="form.onsubmit()">
+                        <label for="verify" class="w3-btn w3-white w3-text-blue w3-round-xxlarge">Verify a Video</label>
+                      </form>
+                      <div id="verifyDownloadArea">
+
+                      </div>
                     </div>
                 </div>
             </div>
@@ -832,6 +846,7 @@
     <script src="static/js/wow.min.js"></script>
     <!--Main-active-JS-->
     <script src="static/js/main.js"></script>
+<script src="static/js/encrypt.js"></script>
 </body>
 
 </html>
