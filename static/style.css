@@ -234,6 +234,7 @@ input:-webkit-autofill:focus {
     padding-bottom: 20px;
 }
 
+/**
 .page-title h2:after {
     content: "\e675";
     font-family: 'themify';
@@ -246,6 +247,7 @@ input:-webkit-autofill:focus {
     height: 15px;
     font-size: 14px;
 }
+*//
 
 /**
 *Box-style
